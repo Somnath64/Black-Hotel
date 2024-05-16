@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @Entity
 public class BookedRoom {
 
@@ -46,6 +46,7 @@ public class BookedRoom {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    public BookedRoom(){}
 
     public void calculateTotalNumberOfGuest(){
         this.totalNumOfGuest = this.NumOfAdults + this.NumOfChidren;

@@ -3,13 +3,13 @@ import { getRoomTypes } from '../utils/ApiFunctions';
 
 const RoomTypeSelector = ({handleRoomInputChange, newRoom}) => {
 
-    const [roomType, setRoomType] = useState([]);
+    const [roomTypes, setRoomTypes] = useState([""]);
     const [showNewRoomTypeInput,setShowNewRoomTypeInput] = useState(false);
     const [newRoomType , setNewRoomType] = useState("");
 
     useEffect(()=>{
         getRoomTypes().then((data) =>{
-            setRoomType(data)
+            setRoomTypes(data)
         })
     },[])
 
@@ -20,7 +20,7 @@ const RoomTypeSelector = ({handleRoomInputChange, newRoom}) => {
 
     const handleAddNewRoomType = () =>{
         if(newRoomType !== ""){
-            setRoomType([...roomType,newRoomType]);
+            setRoomTypes([...roomTypes,newRoomType]);
             setNewRoomType("");
             setShowNewRoomTypeInput(false)
         }
@@ -29,9 +29,9 @@ const RoomTypeSelector = ({handleRoomInputChange, newRoom}) => {
   return (
     <>
     
-    {roomType.length> 0 && (
+    {roomTypes.length> 0 && (
         <div>
-            <select name="roomType" id="roomType" value={newRoom.roomType}
+            <select required className='form-select mb-2' name="roomType" id="roomType" value={newRoom.roomType}
             onChange={(e)=>{
                 if(e.target.value === "Add New"){
                     setShowNewRoomTypeInput(true)
@@ -41,14 +41,14 @@ const RoomTypeSelector = ({handleRoomInputChange, newRoom}) => {
             }}>
                 <option value={""}>Select a room type</option>
                 <option value={"Add New"}>Add New</option>
-                {roomType.map((type,index) =>(
+                {roomTypes.map((type,index) =>(
                     <option value={type} key={index}>{type}</option>
                 ))}
             </select>
             {showNewRoomTypeInput && (
                 <div className='input-group'>
                     <input type="text" className='form-control' placeholder='Enter a new room type' onChange={handleNewRoomInputChange} />
-                    <button className='nbtn btn-hotel' type='button' onClick={handleAddNewRoomType}>Add</button>
+                    <button className='btn btn-hotel' type='button' onClick={handleAddNewRoomType}>Add</button>
                 </div>
             )}
         </div>
